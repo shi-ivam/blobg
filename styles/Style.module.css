@@ -1,0 +1,95 @@
+.container{
+    max-width: 1600px;
+    margin:0 auto;
+}
+
+.header{
+    width: 100%;
+    padding:20px 0;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.pageTitle{
+    font-weight: 200;
+    font-size: 3rem;
+}
+
+.homeMain{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    max-width: 1600px;
+    margin:20px auto;
+    column-gap: 30px;
+    
+}
+
+.homeMainCh{
+    height: 700px; 
+}
+
+.homeMainChMainPostImage{
+    overflow: hidden;
+    height: 500px;
+}
+
+.fullWidthImage{
+    width:100%;
+    margin-top:-40%;
+}
+
+.mainChInfo{
+    display: flex;
+    flex-direction: column;
+}
+
+.mainChInfoTitle{
+    font-weight: 300;
+    font-size: 1.8rem;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.mainChInfoExtract{
+    font-size:1.2rem;
+}
+
+.innerSecCh{
+    display: flex;
+    flex-direction: column;
+}
+
+.innerSecChStory{
+    max-width: 100%;
+    display: flex;
+    height:100px;
+    margin-bottom: 20px;
+}
+
+.innerSecChStory:last-child{
+    margin-bottom: 0;
+}
+
+.innerSecChStoryImageWrap{
+    height:100%;
+    overflow: hidden;
+}
+
+.secStoryImg{
+    width: 200px;
+    margin-top: -40%;
+}
+.secStoryTitle{
+    font-size: 1.6rem;
+    font-weight: 300;
+    margin-bottom: 10px;
+}
+
+.secStoryExtract{
+    font-size: 1.1rem;
+    width:400px;
+}
+
+.SecChStoryInfo{
+    margin-left: 20px;
+}
