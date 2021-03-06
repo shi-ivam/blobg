@@ -5,6 +5,10 @@
   padding: 0;
 }
 
+button, input {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
 body {
   font-size: 16px;
   font-weight: 300;
@@ -26,7 +30,7 @@ div.divider {
   padding-bottom: 20px;
 }
 
-.newPostsPosts {
+.newPostsPosts, .topPostsPosts {
   display: -ms-grid;
   display: grid;
   -ms-grid-columns: 1fr 1fr;
@@ -36,13 +40,13 @@ div.divider {
   row-gap: 30px;
 }
 
-.newPostsPosts .post {
+.newPostsPosts .post, .topPostsPosts .post {
   width: 100%;
-  background: #f0f0f0;
+  background: #f7f7f7;
   padding: 20px;
 }
 
-.newPostsPosts .post .props {
+.newPostsPosts .post .props, .topPostsPosts .post .props {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -54,7 +58,7 @@ div.divider {
           align-items: center;
 }
 
-.newPostsPosts .post .props .attri {
+.newPostsPosts .post .props .attri, .topPostsPosts .post .props .attri {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -66,7 +70,7 @@ div.divider {
           justify-content: flex-start;
 }
 
-.newPostsPosts .post .props .attri .hearts {
+.newPostsPosts .post .props .attri .hearts, .topPostsPosts .post .props .attri .hearts {
   margin-right: 15px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -77,15 +81,15 @@ div.divider {
   border-bottom: 2px solid #dbdbdb;
 }
 
-.newPostsPosts .post .props .attri .hearts p {
+.newPostsPosts .post .props .attri .hearts p, .topPostsPosts .post .props .attri .hearts p {
   margin-right: 5px;
 }
 
-.newPostsPosts .post .props .attri .hearts .heart {
+.newPostsPosts .post .props .attri .hearts .heart, .topPostsPosts .post .props .attri .hearts .heart {
   font-weight: bolder;
 }
 
-.newPostsPosts .post .props .actions {
+.newPostsPosts .post .props .actions, .topPostsPosts .post .props .actions {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -97,12 +101,12 @@ div.divider {
           justify-content: flex-end;
 }
 
-.newPostsPosts .post .props .actions .time {
+.newPostsPosts .post .props .actions .time, .topPostsPosts .post .props .actions .time {
   color: #5a5a5a;
   margin-right: 10px;
 }
 
-.newPostsPosts .post .props .actions .btn button {
+.newPostsPosts .post .props .actions .btn button, .topPostsPosts .post .props .actions .btn button {
   background: #d4d4d4;
   padding: 5px 20px;
   border: none;
@@ -122,7 +126,7 @@ div.divider {
   outline: none;
 }
 
-.newPostsPosts .post .postCon {
+.newPostsPosts .post .postCon, .topPostsPosts .post .postCon {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -133,18 +137,18 @@ div.divider {
   padding: 20px 0 0 0;
 }
 
-.newPostsPosts .post .postCon .title {
+.newPostsPosts .post .postCon .title, .topPostsPosts .post .postCon .title {
   padding: 0 0 10px 0;
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   font-weight: 400;
 }
 
-.newPostsPosts .post .postCon .tags {
+.newPostsPosts .post .postCon .tags, .topPostsPosts .post .postCon .tags {
   display: block;
-  padding: 10px 0;
+  padding: 0px 0 10px 0;
 }
 
-.newPostsPosts .post .postCon .tags .tag {
+.newPostsPosts .post .postCon .tags .tag, .topPostsPosts .post .postCon .tags .tag {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -158,19 +162,19 @@ div.divider {
   margin-bottom: 10px;
   font-size: 0.9rem;
   float: left;
-  padding: 5px 10px;
+  padding: 3px 10px;
   background: white;
   color: black;
   font-style: italic;
   border-radius: 20px;
 }
 
-.newPostsPosts .post .postCon .tags .tag .hash {
+.newPostsPosts .post .postCon .tags .tag .hash, .topPostsPosts .post .postCon .tags .tag .hash {
   font-weight: bold;
   margin-right: 5px;
 }
 
-.newPostsPosts .post .topbar {
+.newPostsPosts .post .topbar, .topPostsPosts .post .topbar {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -183,7 +187,7 @@ div.divider {
           justify-content: flex-start;
 }
 
-.newPostsPosts .post .topbar .content {
+.newPostsPosts .post .topbar .content, .topPostsPosts .post .topbar .content {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -195,7 +199,7 @@ div.divider {
           align-items: center;
 }
 
-.newPostsPosts .post .topbar .content .image {
+.newPostsPosts .post .topbar .content .image, .topPostsPosts .post .topbar .content .image {
   border-radius: 50%;
   overflow: hidden;
   border: 2px solid white;
@@ -204,11 +208,11 @@ div.divider {
   margin-right: 10px;
 }
 
-.newPostsPosts .post .topbar .content .image img {
+.newPostsPosts .post .topbar .content .image img, .topPostsPosts .post .topbar .content .image img {
   height: 100%;
 }
 
-.newPostsPosts .post .topbar .content .data {
+.newPostsPosts .post .topbar .content .data, .topPostsPosts .post .topbar .content .data {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -221,12 +225,57 @@ div.divider {
           align-items: flex-start;
 }
 
-.newPostsPosts .post .topbar .content .data .name {
+.newPostsPosts .post .topbar .content .data .name, .topPostsPosts .post .topbar .content .data .name {
   font-size: 1rem;
   font-weight: normal;
 }
 
-.newPostsPosts .post .topbar .content .data .date {
+.newPostsPosts .post .topbar .content .data .date, .topPostsPosts .post .topbar .content .data .date {
   font-size: 0.8rem;
+}
+
+div.footer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  min-height: 200px;
+}
+
+div.footer .main {
+  font-size: 1.3rem;
+}
+
+div.footer .sec {
+  margin-top: 5px;
+  font-size: 1rem;
+}
+
+@media only screen and (max-width: 800px) {
+  .newPostsPosts, .topPostsPosts {
+    -ms-grid-columns: 1fr;
+        grid-template-columns: 1fr;
+  }
+  .new-posts, .top-posts {
+    padding: 20px;
+  }
+  .props {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+  .props .actions {
+    margin-top: 10px;
+  }
 }
 /*# sourceMappingURL=main.css.map */

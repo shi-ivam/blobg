@@ -1,0 +1,94 @@
+.loginwrap {
+  height: 90vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.loginwrap .loginForm {
+  width: 400px;
+  padding: 20px;
+  background: #f1f1f1;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.loginwrap .loginForm .sectionTitle {
+  font-size: 1.7rem;
+  font-weight: 400;
+}
+
+.loginwrap .loginForm .inputs {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  padding: 20px 0;
+}
+
+.loginwrap .loginForm .inputs .input {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.loginwrap .loginForm .inputs .input:last-child {
+  margin-bottom: 0;
+}
+
+.loginwrap .loginForm .inputs .input label {
+  font-size: 1.25rem;
+}
+
+.loginwrap .loginForm .inputs .input input {
+  border: 0;
+  margin-top: 10px;
+  width: 100%;
+  padding: 10px;
+  font-size: 1.1rem;
+  outline: none;
+}
+
+.loginwrap .loginForm .buttons {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 20px 0 0 0;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.loginwrap .loginForm .buttons button {
+  padding: 8px 10px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  outline: none;
+}
+
+.loginwrap .loginForm .buttons button.primary {
+  background: #dbdbdb;
+  border: none;
+  margin-bottom: 10px;
+}
+
+.loginwrap .loginForm .buttons button.secondary {
+  border: 0;
+  color: #444444;
+  background: white;
+}
+/*# sourceMappingURL=auth.css.map */
