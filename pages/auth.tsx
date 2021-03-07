@@ -2,6 +2,7 @@ import { createRef,useState} from 'react';
 import Head from 'next/head';
 import axios from 'axios';
 
+
 export default function Auth(){
     const [login,setLogin] = useState(true);
     const unameRef:React.RefObject<HTMLInputElement> = createRef();
@@ -19,8 +20,13 @@ export default function Auth(){
                 type:'login',
                 passwd:password
             })
-            .then((data) => {
-                console.log(data)
+            .then((res) => {
+                if (res.data.type === 'success'){
+                    window.location.href = "/topics";
+                }
+                else{
+                    alert(`Failed due to : ${res.data.reason}`)
+                }
             })
         }
     }
@@ -28,6 +34,7 @@ export default function Auth(){
         <div className="container">
             <Head>
                 <title>Login / Signup</title>
+                <link rel="icon" href="/favicon.png" />
             </Head>
             <div className={"header"}>
                 <h1 className={"pageTitle"}>Deblofer</h1>

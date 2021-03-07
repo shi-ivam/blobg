@@ -1,0 +1,69 @@
+.topics {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (1fr)[10];
+      grid-template-columns: repeat(10, 1fr);
+  -webkit-column-gap: 10px;
+          column-gap: 10px;
+  row-gap: 10px;
+  padding: 20px 0 10px;
+}
+
+.topics .topic {
+  text-decoration: none;
+  color: #464646;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  background: rgba(240, 240, 240, 0.568);
+  position: relative;
+}
+
+.topics .topic a {
+  color: black;
+  text-decoration: none;
+  padding: 7px 20px;
+}
+
+.topics .topic::after {
+  content: '';
+  position: absolute;
+  z-index: -2;
+  height: 100%;
+  width: 0px;
+  background: #d8d8d8;
+  top: 0;
+  left: 0;
+  -webkit-transition: 0.3s cubic-bezier(0.55, 0.085, 0.68, 0.53);
+  transition: 0.3s cubic-bezier(0.55, 0.085, 0.68, 0.53);
+}
+
+.topics .topic:hover {
+  color: white;
+}
+
+.topics .topic:hover::after {
+  width: 100%;
+}
+
+@media only screen and (max-width: 800px) {
+  .topics {
+    -ms-grid-columns: (1fr)[4];
+        grid-template-columns: repeat(4, 1fr);
+    padding: 20px;
+    font-size: 0.9rem;
+  }
+  .divider {
+    margin-top: 20px !important;
+    margin-left: 50% !important;
+    margin-bottom: 20px !important;
+    margin-right: 0px !important;
+  }
+  .topPostsPosts {
+    padding: 0 20px;
+  }
+}
+/*# sourceMappingURL=topics.css.map */

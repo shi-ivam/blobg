@@ -3,6 +3,7 @@ import dbConnect from '../../utils/dbConnect';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
+import cookie from 'cookie';
 
 dotenv.config();
 
@@ -25,7 +26,14 @@ export default (req,res) => {
                                 createdAt:Date.now(),
                             }
                             const token = jwt.sign(data,process.env.JWTSECRET);
-                            res.cookie('actn',JSON.stringify(token)).send({type:'success'})
+                            res.setHeader('Set-Cookie',cookie.serialize('auth',JSON.stringify(token),{
+                                httpOnly:true,
+                                secure:!process.env.NODE_ENV,
+                                sameSite:'strict',
+                                maxAge:3600,
+                                path:'/'
+                            }))
+                            res.send({type:'success'})
                         }
                         else{
                             res.send({type:"failed",reason:'passworddoesntmatch'})
@@ -46,6 +54,7 @@ export default (req,res) => {
             }
         }
     )
+    .catch(err => {console.log(err)})
 }
 
 export const config = {
