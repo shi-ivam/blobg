@@ -91,4 +91,10 @@
   color: #444444;
   background: white;
 }
+
+@media only screen and (max-width: 800px) {
+  .loginwrap {
+    padding: 0 20px;
+  }
+}
 /*# sourceMappingURL=auth.css.map */

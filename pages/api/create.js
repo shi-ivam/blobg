@@ -5,8 +5,9 @@ import dbConnect from '../../utils/dbConnect.js';
 
 export default (req, res) => {
   dbConnect().then(() => {
-    user.findOne({id:'adwadaa'})
-    .then((data) => res.send(data))
-    .catch(err => {console.log(err)})
+    user.create({id:'adwadaa',email:"email@email.com",password:'adwa',username:'wadwa'})
+    .then((c) => {console.log('User Created');console.log(c)})
+    .catch(err => console.log(err))
   })
+  .catch(err => console.error(err))
 }
