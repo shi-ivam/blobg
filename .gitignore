@@ -34,4 +34,6 @@ yarn-error.log*
 .vercel
 
 
+.env
+
 ushaj-f9500-firebase-adminsdk-s6435-52cc172444.json
