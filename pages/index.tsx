@@ -1,24 +1,50 @@
 import Head from 'next/head';
 import styles from '../styles/Style.module.css';
+import jwt from 'jsonwebtoken';
+import user from '../models/user.js';
+import Header from '../components/Header.partial';
 
-export default function Home() {
+export async function getServerSideProps(context) {
+  // Default auth to false
+  let auth = false;
+
+  // check token and verify valid user
+  if (!context.req.headers.cookie){
+      return {
+          props:{
+              auth
+          }
+      }
+  }
+  else{
+      console.log(context.req.headers.cookie.split('=')[1])
+      const jwtUser = jwt.verify(context.req.headers.cookie.split('=')[1],process.env.JWTSECRET);
+      const foundUser = await user.findOne({id:jwtUser.userId});
+      if (foundUser){
+          console.log(foundUser);
+          auth = true;
+          return {
+              props: {auth}, // Will be passed to the page component as props
+          }
+      }
+      else{
+
+          return {
+              props: {auth}, // Will be passed to the page component as props
+          }
+      }
+  }
+
+}
+
+export default function Home(props) {
   return (
     <div className={styles.container}>
       <Head>
         <title>Deblofer</title>
         <link rel="icon" href="/favicon.png" />
       </Head>
-      <div className={styles.header}>
-        <h1 className={styles.pageTitle}>Deblofer</h1>
-        <ul className={styles.navBarUL}>
-          <li className={styles.navBarULListItem}>
-            <a href="/auth">Join/Login</a>
-          </li>
-          <li className={styles.navBarULListItem}>
-            <a href="/topics">Topic</a>
-          </li>
-        </ul>
-      </div>
+      <Header auth={props.auth}/>
       <div className={styles.homeMain}>
         <div className={styles.homeMainCh}> 
           <div className={styles.homeMainChMainPostImage}>
