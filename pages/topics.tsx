@@ -2,6 +2,7 @@ import Head from "next/head";
 import jwt from 'jsonwebtoken';
 import user from '../models/user.js';
 import Header from '../components/Header.partial';
+import dbConnect from '../utils/dbConnect.js';
 
 
 export async function getServerSideProps(context) {
@@ -17,7 +18,7 @@ export async function getServerSideProps(context) {
       }
   }
   else{
-      console.log(context.req.headers.cookie.split('=')[1])
+      const db = await dbConnect();
       const jwtUser = jwt.verify(context.req.headers.cookie.split('=')[1],process.env.JWTSECRET);
       const foundUser = await user.findOne({id:jwtUser.userId});
       if (foundUser){

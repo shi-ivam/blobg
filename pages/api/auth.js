@@ -30,7 +30,6 @@ export default (req,res) => {
                                 createdAt:Date.now(),
                             }
                             const token = jwt.sign(data,process.env.JWTSECRET);
-                            console.log('New Token:',token);
                             res.setHeader('Set-Cookie',cookie.serialize('auth',token,{
                                 httpOnly:true,
                                 secure:!process.env.NODE_ENV,

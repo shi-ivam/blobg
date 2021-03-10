@@ -1,7 +1,9 @@
-export default (props) => {
+export default  (props) => {
     return (
         <div className={"header"}>
-            <h1 className={"pageTitle"}>Deblofer</h1>
+            <a href="/" className="pageTitleLink">
+                <h1 className={"pageTitle"}>Deblofer</h1>
+            </a>
             <ul className={"navBarUL"}>
                 <li className={"navBarULListItem"}>
                     <a href="/write">Write</a>
