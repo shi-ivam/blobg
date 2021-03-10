@@ -1,4 +1,4 @@
-### Devlofer
+### Deblofer
 ---
 Made with <3 By Shivam Kumar 
 
