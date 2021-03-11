@@ -42,10 +42,10 @@ export async function getServerSideProps(context) {
 }
 
 export default (props) => {
-    const titleRef = createRef();
+    const titleRef:React.RefObject<HTMLInputElement> = createRef();
     const thumbRef:React.RefObject<HTMLInputElement> = createRef();
     const tagsRef:React.RefObject<HTMLInputElement> = createRef();
-    const bodyRef = createRef();
+    const bodyRef:React.RefObject<HTMLInputElement> = createRef();
     
     const [suggestedTag,setSuggestedTag] = useState('React');
     const [tags,setTags] = useState([]);
@@ -55,7 +55,21 @@ export default (props) => {
     const [imageSrc,setImageSrc] = useState('');
     
     const handleUpload = () => {
-
+        const text = bodyRef.current.value;
+        console.log(text)
+        var formData = new FormData();
+        var imagefile = thumbRef.current;
+        console.log(imagefile)
+        formData.append("image", imagefile.files[0]);
+        formData.append("title",titleRef.current.value);
+        formData.append("body",bodyRef.current.value);
+        formData.append('tags',JSON.stringify(tags));
+        formData.append('crop',JSON.stringify(crop));
+        axios.post('/api/uploadpost', formData, {
+            headers: {
+            'Content-Type': 'multipart/form-data'
+            }
+        })
     }
     const handleKeyPress  = (e) => {
         if (e.which == 13 && suggested && tags.length <= 10){
@@ -102,7 +116,7 @@ export default (props) => {
     return (
         <div className="container">
             <Head>
-                <title>Login / Signup</title>
+                <title>Write</title>
                 <link rel="icon" href="/favicon.png" />
             </Head>
             <Header auth={props.auth} />
@@ -111,7 +125,7 @@ export default (props) => {
                 <div className="post">
                     <div className="one-grp grp">
                         <label htmlFor="">Title</label>
-                        <input type="text" />
+                        <input type="text" ref={titleRef}/>
                     </div>
                     <div className="two-grp grp">
                         <div className="single-input">
@@ -151,10 +165,10 @@ export default (props) => {
                     )}
                     <div className="md grp">
                         <label htmlFor="">Body</label>
-                        <textarea name="" id=""></textarea>
+                        <textarea name="" ref={bodyRef} id=""></textarea>
                     </div>
                     <div className="btns grp">
-                        <button>Publish</button>
+                        <button onClick={handleUpload}>Publish</button>
                     </div>
                 </div>
             </section>
