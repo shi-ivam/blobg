@@ -15,6 +15,7 @@ export async function getServerSideProps(context) {
             },
         };
     } else {
+        const db = await dbConnect();
         console.log(context.req.headers.cookie.split("=")[1]);
         const jwtUser = jwt.verify(
             context.req.headers.cookie.split("=")[1],

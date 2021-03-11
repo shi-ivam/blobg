@@ -21,9 +21,38 @@
             border: 0;
             outline: none;
         }
+        div.tag-input{
+            position: relative;
+            p{
+                position: absolute;
+                top:50%;
+                left:11px;
+                transform: translateY(calc(-50% - 1px));
+                font-size: 1.1rem;
+                color: rgb(66, 66, 66);
+                z-index: 1;
+            }
+        }
         .single-input{
             display: flex;
             flex-direction: column;
+        }
+    
+        .tags{
+            display: flex;
+            flex-direction: column;
+            ul{
+                display: block;
+                width: 100%;
+                list-style-type: none;
+                li{
+                    float: left;
+                    padding:5px 20px;
+                    background:rgb(238, 238, 238);
+                    margin-right: 20px;
+                    margin-bottom: 20px;
+                }
+            }
         }
         .grp{
             margin: 20px 0;
@@ -68,5 +97,24 @@
                 outline: none;
             }
         }
+    }
+}
+
+
+.ReactModal__Content {
+    width: max-content;
+    height: max-content;
+    top:50% !important;
+    left:50% !important;
+    transform: translate(-50%,-50%);
+    inset: 0;
+    .modal-button{
+        margin-top: 20px;
+        padding:10px 20px;
+        background:rgb(228, 228, 228);
+        border: 0;
+        font-size: 1.2rem;
+        cursor: pointer;
+        outline: none;
     }
 }

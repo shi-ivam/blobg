@@ -3,6 +3,7 @@ import styles from '../styles/Style.module.css';
 import jwt from 'jsonwebtoken';
 import user from '../models/user.js';
 import Header from '../components/Header.partial';
+import dbConnect from '../utils/dbConnect';
 
 export async function getServerSideProps(context) {
   // Default auth to false
@@ -17,6 +18,7 @@ export async function getServerSideProps(context) {
       }
   }
   else{
+      const db = await dbConnect();
       console.log(context.req.headers.cookie.split('=')[1])
       const jwtUser = jwt.verify(context.req.headers.cookie.split('=')[1],process.env.JWTSECRET);
       const foundUser = await user.findOne({id:jwtUser.userId});

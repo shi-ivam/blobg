@@ -29,6 +29,21 @@
   outline: none;
 }
 
+.write .post div.tag-input {
+  position: relative;
+}
+
+.write .post div.tag-input p {
+  position: absolute;
+  top: 50%;
+  left: 11px;
+  -webkit-transform: translateY(calc(-50% - 1px));
+          transform: translateY(calc(-50% - 1px));
+  font-size: 1.1rem;
+  color: #424242;
+  z-index: 1;
+}
+
 .write .post .single-input {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -37,6 +52,30 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+}
+
+.write .post .tags {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.write .post .tags ul {
+  display: block;
+  width: 100%;
+  list-style-type: none;
+}
+
+.write .post .tags ul li {
+  float: left;
+  padding: 5px 20px;
+  background: #eeeeee;
+  margin-right: 20px;
+  margin-bottom: 20px;
 }
 
 .write .post .grp {
@@ -93,6 +132,30 @@
   color: #5c5c5c;
   cursor: pointer;
   border: 2px solid #d4d4d4;
+  outline: none;
+}
+
+.ReactModal__Content {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  height: -webkit-max-content;
+  height: -moz-max-content;
+  height: max-content;
+  top: 50% !important;
+  left: 50% !important;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  inset: 0;
+}
+
+.ReactModal__Content .modal-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background: #e4e4e4;
+  border: 0;
+  font-size: 1.2rem;
+  cursor: pointer;
   outline: none;
 }
 /*# sourceMappingURL=write.css.map */
