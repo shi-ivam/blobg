@@ -15,11 +15,11 @@ export async function getServerSideProps(context) {
 
     // check token and verify valid user
     if (!context.req.headers.cookie) {
-        return {
-            props: {
-                auth,
-            },
-        };
+        
+        var res = context.res;
+        res.statusCode = 302;
+        res.setHeader("Location", `/auth`); // Replace <link> with your url link
+        return { props: {} };
     } else {
         const db = await dbConnect();
         const jwtUser = jwt.verify(
