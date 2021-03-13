@@ -16,6 +16,7 @@
     "cors": "^2.8.5",
     "dompurify": "^2.2.6",
     "dotenv": "^8.2.0",
+    "firebase": "^8.3.0",
     "firebase-admin": "^9.5.0",
     "formidable": "^1.2.2",
     "fs": "^0.0.1-security",

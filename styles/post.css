@@ -1,4 +1,41 @@
 .post-wrap {
   width: 100%;
+  padding: 0 0 20px 0;
+}
+
+.post-wrap .thumb {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.post-wrap .thumb img {
+  height: 400px;
+  margin: 50px auto;
+}
+
+.post-wrap * {
+  line-height: 1.5rem;
+}
+
+.post-wrap h1, .post-wrap h2, .post-wrap h3, .post-wrap h4, .post-wrap h5, .post-wrap h6 {
+  padding: 30px 0 10px 0;
+}
+
+.f0f {
+  height: 60vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-size: 3rem;
 }
 /*# sourceMappingURL=post.css.map */
