@@ -37,7 +37,14 @@ export default (req, res) => {
 
                                         const converter = new showdown.Converter();
                                         const val = fs.readFileSync('./markdown/' + foundPost.body);
-                                        const text = val.toString();
+                                        let text = val.toString();
+                                        for (let x = 0; x < foundPost.images.length; x++){
+                                            const img = await bucket.file(foundPost.author+'====='+foundPost.images[x].id + '.jpg').getSignedUrl({
+                                                action: 'read',
+                                                expires: moment().add(3, 'days').format('MM-DD-YYYY')
+                                            })
+                                            text = text.replace(new RegExp(foundPost.images[x].id,'g'),img[0]);
+                                        }
                                         const html = converter.makeHtml(text);
                                         const thumb = await bucket.file(foundPost.thumb).getSignedUrl({
                                             action: 'read',

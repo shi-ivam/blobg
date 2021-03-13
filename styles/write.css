@@ -82,6 +82,83 @@
   margin: 20px 0;
 }
 
+.write .post .grp p.label {
+  font-size: 1.2rem;
+  padding-bottom: 10px;
+}
+
+.write .post .grp .images {
+  display: block;
+  padding: 20px 10px 10px 20px;
+  background: #f1f1f1;
+}
+
+.write .post .grp .images .wrap {
+  float: left;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  padding: 20px;
+  max-width: 200px;
+  background: white;
+}
+
+.write .post .grp .images .wrap .img-inr {
+  height: 80px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  background: #e7e7e7;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.write .post .grp .images .wrap .img-inr img {
+  margin: 0 auto;
+  height: 100%;
+}
+
+.write .post .grp .images .wrap .link {
+  margin-top: 20px;
+  font-size: 0.9rem;
+}
+
+.write .post .grp .images .wrap .link h3 {
+  font-weight: normal;
+  font-size: 1.05rem;
+  font-style: italic;
+}
+
+.write .post .grp .upload-images {
+  padding: 10px;
+  margin-top: 10px;
+  background: #f1f1f1;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+}
+
+.write .post .grp .upload-images button {
+  border: 0;
+  font-weight: 600;
+  font-size: 1rem;
+  background: white;
+  padding: 8px 20px;
+}
+
 .write .post .one-grp {
   width: 100%;
   display: -ms-grid;
@@ -147,6 +224,8 @@
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
   inset: 0;
+  max-height: 60vh;
+  max-width: 80vw;
 }
 
 .ReactModal__Content .modal-button {

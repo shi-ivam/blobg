@@ -32,10 +32,10 @@ export const config = {
 export default async (req, res) => {
     const db = await dbConnect();
     const cookie = req.headers.cookie;
-    const jwtUser = jwt.verify(cookie.split('=')[1],process.env.JWTSECRET);
-    const foundUser = await user.findOne({id:jwtUser.userId});
-    if (!foundUser){
-        res.send({type:'failed',reason:'invalidauth'})
+    const jwtUser = jwt.verify(cookie.split('=')[1], process.env.JWTSECRET);
+    const foundUser = await user.findOne({ id: jwtUser.userId });
+    if (!foundUser) {
+        res.send({ type: 'failed', reason: 'invalidauth' })
         return
     }
     if (req.method === "POST") {
@@ -48,7 +48,9 @@ export default async (req, res) => {
             const body = fields.body;
             const tags = JSON.parse(fields.tags);
             const parsedCrop = JSON.parse(fields.crop);
+            const images = JSON.parse(fields.images);
             fs.writeFileSync('./markdown/' + id + '.md', body);
+            console.log(parsedCrop)
             sharp(files.image.path)
                 .extract({
                     width: Math.floor(parsedCrop.width),
@@ -56,7 +58,6 @@ export default async (req, res) => {
                     left: Math.floor(parsedCrop.y),
                     top: Math.floor(parsedCrop.x),
                 })
-                .resize(500, 500)
                 .toFile('./images/' + id + '.jpg')
                 .then(function (new_file_info) {
                     console.log("Image cropped and saved");
@@ -74,13 +75,27 @@ export default async (req, res) => {
                         return result;
                     }
 
-                    const slug = String(title.toLowerCase()).replace(/\s+/g,'-') + makeid(8);
+                    const slug = String(title.toLowerCase()).replace(/\s+/g, '-') + makeid(8);
 
-                    post.create({id,author:foundUser.id,slug,body:id+'.md',title,thumb:id+'.jpg',tags})
-                    .then((createdPost) => {
-                        res.send({ type: 'created',post:createdPost });
+                    images.forEach(async (e) => {
+                        const saveId = foundUser.id + '=====' + e.id;
+                        var base64Data = e.base.replace(/^data:image\/png;base64,/, "").replace(/^data:image\/jpeg;base64,/, "").replace(/^data:image\/jpg;base64,/, "");
 
+                        fs.writeFileSync("./images/" + saveId + '--temp.jpg', base64Data, 'base64');
+                        sharp("./images/" + saveId + '--temp.jpg')
+                            .resize({ width: 500 })
+                            .toFile("./images/" + saveId + '.jpg')
+                            .then(() => {
+
+                                bucket.upload("./images/" + saveId + '.jpg');
+                            })
                     })
+
+                    post.create({ id, author: foundUser.id, slug, body: id + '.md', title, thumb: id + '.jpg', tags, images })
+                        .then((createdPost) => {
+                            res.send({ type: 'created', slug:createdPost.slug });
+
+                        })
                 })
                 .catch(function (err) {
                     console.log("An error occured");

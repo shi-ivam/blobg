@@ -29,6 +29,9 @@ const Post = mongoose.Schema({
     tags:{
         type:Array
     },
+    images:{
+        type:Array
+    }
 
 })
 
