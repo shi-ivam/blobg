@@ -39,12 +39,12 @@ export async function getServerSideProps(context) {
           const oneMonthAgo = new Date(newdate)
           
 
-          const latestPosts = await post.find({dateCreated:{
+          const latestPosts = JSON.stringify(await post.find({dateCreated:{
             $gte:oneMonthAgo
-          }})
+          }}))
 
-          const topPosts = await post.find().sort({hearts:-1}).limit(8)
-
+          const topPosts = JSON.stringify(await post.find().sort({hearts:-1}).limit(8))
+          // Maybe Nextjs cannot send Object and just string -  Hunch
           console.log({latestPosts,topPosts})
           return {
               props: {auth:true,latestPosts,topPosts}, // Will be passed to the page component as props
