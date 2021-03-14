@@ -282,7 +282,7 @@ export default (props) => {
 };
 
 function CropDemo(props: any) {
-    const [crop, setCrop] = useState({ unit:'%' });
+    const [crop, setCrop] = useState({ aspect:3/1 });
     return (
         <ReactCrop
             src={props.src}

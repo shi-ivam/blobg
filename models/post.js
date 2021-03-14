@@ -31,6 +31,10 @@ const Post = mongoose.Schema({
     },
     images:{
         type:Array
+    },
+    hearts:{
+        type:Number,
+        default:0,
     }
 
 })

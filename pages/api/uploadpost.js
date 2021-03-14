@@ -51,12 +51,14 @@ export default async (req, res) => {
             const images = JSON.parse(fields.images);
             fs.writeFileSync('./markdown/' + id + '.md', body);
             console.log(parsedCrop)
+            console.log(Math.floor(parsedCrop.width))
+            console.log(Math.floor(parsedCrop.height))
             sharp(files.image.path)
                 .extract({
                     width: Math.floor(parsedCrop.width),
                     height: Math.floor(parsedCrop.height),
-                    left: Math.floor(parsedCrop.y),
-                    top: Math.floor(parsedCrop.x),
+                    left: Math.floor(parsedCrop.x),
+                    top: Math.floor(parsedCrop.y),
                 })
                 .toFile('./images/' + id + '.jpg')
                 .then(function (new_file_info) {
@@ -75,7 +77,7 @@ export default async (req, res) => {
                         return result;
                     }
 
-                    const slug = String(title.toLowerCase()).replace(/\s+/g, '-') + makeid(8);
+                    const slug = String(title.toLowerCase()).replace(/\s+/g, '-') + '-' + makeid(8);
 
                     images.forEach(async (e) => {
                         const saveId = foundUser.id + '=====' + e.id;
