@@ -49,60 +49,100 @@ export default async (req, res) => {
             const tags = JSON.parse(fields.tags);
             const parsedCrop = JSON.parse(fields.crop);
             const images = JSON.parse(fields.images);
+            const image = files.image;
             fs.writeFileSync('./markdown/' + id + '.md', body);
-            console.log(parsedCrop)
-            console.log(Math.floor(parsedCrop.width))
-            console.log(Math.floor(parsedCrop.height))
-            sharp(files.image.path)
-                .extract({
-                    width: Math.floor(parsedCrop.width),
-                    height: Math.floor(parsedCrop.height),
-                    left: Math.floor(parsedCrop.x),
-                    top: Math.floor(parsedCrop.y),
-                })
-                .toFile('./images/' + id + '.jpg')
-                .then(function (new_file_info) {
-                    console.log("Image cropped and saved");
-                    var bucket = admin.storage().bucket();
-                    bucket.upload("./images/" + id + '.jpg');
-                    bucket.upload('./markdown/' + id + '.md');
 
-                    function makeid(length) {
-                        var result = '';
-                        var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-                        var charactersLength = characters.length;
-                        for (var i = 0; i < length; i++) {
-                            result += characters.charAt(Math.floor(Math.random() * charactersLength));
+            if (image) {
+                sharp(image.path)
+                    .extract({
+                        width: Math.floor(parsedCrop.width),
+                        height: Math.floor(parsedCrop.height),
+                        left: Math.floor(parsedCrop.x),
+                        top: Math.floor(parsedCrop.y),
+                    })
+                    .resize({ width: 800 })
+                    .toFile('./images/' + id + '.jpg')
+                    .then(function (new_file_info) {
+                        console.log("Image cropped and saved");
+                        var bucket = admin.storage().bucket();
+                        bucket.upload("./images/" + id + '.jpg');
+                        bucket.upload('./markdown/' + id + '.md');
+
+                        function makeid(length) {
+                            var result = '';
+                            var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+                            var charactersLength = characters.length;
+                            for (var i = 0; i < length; i++) {
+                                result += characters.charAt(Math.floor(Math.random() * charactersLength));
+                            }
+                            return result;
                         }
-                        return result;
-                    }
 
-                    const slug = String(title.toLowerCase()).replace(/\s+/g, '-') + '-' + makeid(8);
+                        const slug = String(title.toLowerCase()).replace(/\s+/g, '-') + '-' + makeid(8);
 
-                    images.forEach(async (e) => {
-                        const saveId = foundUser.id + '=====' + e.id;
-                        var base64Data = e.base.replace(/^data:image\/png;base64,/, "").replace(/^data:image\/jpeg;base64,/, "").replace(/^data:image\/jpg;base64,/, "");
+                        images.forEach(async (e) => {
+                            const saveId = foundUser.id + '=====' + e.id;
+                            var base64Data = e.base.replace(/^data:image\/png;base64,/, "").replace(/^data:image\/jpeg;base64,/, "").replace(/^data:image\/jpg;base64,/, "");
 
-                        fs.writeFileSync("./images/" + saveId + '--temp.jpg', base64Data, 'base64');
-                        sharp("./images/" + saveId + '--temp.jpg')
-                            .resize({ width: 500 })
-                            .toFile("./images/" + saveId + '.jpg')
-                            .then(() => {
+                            fs.writeFileSync("./images/" + saveId + '--temp.jpg', base64Data, 'base64');
+                            sharp("./images/" + saveId + '--temp.jpg')
+                                .resize({ width: 500 })
+                                .toFile("./images/" + saveId + '.jpg')
+                                .then(() => {
 
-                                bucket.upload("./images/" + saveId + '.jpg');
+                                    bucket.upload("./images/" + saveId + '.jpg');
+                                })
+                        })
+
+                        post.create({ id, author: foundUser.id, slug, body: id + '.md', title, thumb: id + '.jpg', tags, images })
+                            .then((createdPost) => {
+                                res.send({ type: 'created', slug: createdPost.slug });
+
                             })
                     })
+                    .catch(function (err) {
+                        console.log("An error occured");
+                        console.log(err);
+                    });
+            }
+            else {
+                console.log("Image cropped and saved");
+                var bucket = admin.storage().bucket();
+                bucket.upload("./images/" + id + '.jpg');
+                bucket.upload('./markdown/' + id + '.md');
 
-                    post.create({ id, author: foundUser.id, slug, body: id + '.md', title, thumb: id + '.jpg', tags, images })
-                        .then((createdPost) => {
-                            res.send({ type: 'created', slug:createdPost.slug });
+                function makeid(length) {
+                    var result = '';
+                    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+                    var charactersLength = characters.length;
+                    for (var i = 0; i < length; i++) {
+                        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+                    }
+                    return result;
+                }
 
+                const slug = String(title.toLowerCase()).replace(/\s+/g, '-') + '-' + makeid(8);
+
+                images.forEach(async (e) => {
+                    const saveId = foundUser.id + '=====' + e.id;
+                    var base64Data = e.base.replace(/^data:image\/png;base64,/, "").replace(/^data:image\/jpeg;base64,/, "").replace(/^data:image\/jpg;base64,/, "");
+
+                    fs.writeFileSync("./images/" + saveId + '--temp.jpg', base64Data, 'base64');
+                    sharp("./images/" + saveId + '--temp.jpg')
+                        .resize({ width: 500 })
+                        .toFile("./images/" + saveId + '.jpg')
+                        .then(() => {
+
+                            bucket.upload("./images/" + saveId + '.jpg');
                         })
                 })
-                .catch(function (err) {
-                    console.log("An error occured");
-                    console.log(err);
-                });
+
+                post.create({ id, author: foundUser.id, slug, body: id + '.md', title, thumb:'none', tags, images })
+                    .then((createdPost) => {
+                        res.send({ type: 'created', slug: createdPost.slug });
+
+                    })
+            }
         });
     } else {
         res.send("GET");

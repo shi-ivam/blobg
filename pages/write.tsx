@@ -62,8 +62,8 @@ export default (props) => {
 
     const handleUpload = () => {
 
-        console.log(crop);
-        return
+        // console.log(crop);
+        // return
 
         const text = bodyRef.current.value;
         console.log(text);

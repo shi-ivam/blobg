@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const Post = mongoose.Schema({
+const Post = new mongoose.Schema({
     id:{
         type:String,
         required:true,
@@ -35,6 +35,11 @@ const Post = mongoose.Schema({
     hearts:{
         type:Number,
         default:0,
+    },
+    dateCreated:{
+        type:Date,
+        default:new Date(),
+        required:true,
     }
 
 })

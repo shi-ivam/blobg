@@ -45,7 +45,7 @@ export async function getServerSideProps(context) {
 
           const topPosts = await post.find().sort({hearts:-1}).limit(8)
 
-
+          console.log({latestPosts,topPosts})
           return {
               props: {auth:true,latestPosts,topPosts}, // Will be passed to the page component as props
           }

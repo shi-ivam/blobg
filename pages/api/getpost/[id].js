@@ -46,7 +46,7 @@ export default (req, res) => {
                                             text = text.replace(new RegExp(foundPost.images[x].id,'g'),img[0]);
                                         }
                                         const html = converter.makeHtml(text);
-                                        const thumb = await bucket.file(foundPost.thumb).getSignedUrl({
+                                        const thumb = foundPost.thumb === 'none' ? [''] : await bucket.file(foundPost.thumb).getSignedUrl({
                                             action: 'read',
                                             expires: moment().add(3, 'days').format('MM-DD-YYYY')
                                         })
