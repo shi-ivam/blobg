@@ -16,7 +16,6 @@
         padding:30px 0 10px 0;
     }
 }
-
 .f0f{
     height:60vh;
     display: flex;
@@ -25,4 +24,19 @@
     font-size: 3rem;
 }
 
+
+.overlay{
+    position:  fixed;
+    top:50%;
+    display: flex;
+    flex-direction: column;
+    right:20px;
+    padding:20px 20px;
+    background:white;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    button{
+        padding:20px;
+    }
+}
 

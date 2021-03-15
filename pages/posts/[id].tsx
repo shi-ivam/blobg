@@ -83,6 +83,14 @@ export default (props) => {
                 <div className="main">made with {"<3"} by shivam kumar</div>
                 <div className="sec">using Nextjs, Mongodb and Node</div>
             </div>
+            <div className="overlay">
+                <button>
+                    {"<3"}
+                </button>
+                <button>
+                    {"<3"}
+                </button>
+            </div>
         </div>
     );
 };

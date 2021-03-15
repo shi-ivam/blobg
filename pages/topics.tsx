@@ -3,11 +3,14 @@ import jwt from 'jsonwebtoken';
 import user from '../models/user.js';
 import Header from '../components/Header.partial';
 import dbConnect from '../utils/dbConnect.js';
-
+import fs from 'fs';
 
 export async function getServerSideProps(context) {
   // Default auth to false
   let auth = false;
+
+  const tags = (fs.readFileSync('./topics.json').toString());
+
 
   // check token and verify valid user
   if (!context.req.headers.cookie){
@@ -25,13 +28,13 @@ export async function getServerSideProps(context) {
           console.log(foundUser);
           auth = true;
           return {
-              props: {auth}, // Will be passed to the page component as props
+              props: {auth,tags}, // Will be passed to the page component as props
           }
       }
       else{
 
           return {
-              props: {auth}, // Will be passed to the page component as props
+              props: {auth,tags}, // Will be passed to the page component as props
           }
       }
   }
@@ -41,6 +44,7 @@ export async function getServerSideProps(context) {
 
 
 export default (props:any) => {
+  const tags = JSON.parse(props.tags)
   return (
     <div className="container">
       <Head>
@@ -48,53 +52,17 @@ export default (props:any) => {
         <link rel="icon" href="/favicon.png" />
       </Head>
       <Header auth={props.auth}/>
+      <div className="flex">
       <div className="topics">
-        <div className="topic">
-          <a href="#">React</a>
-        </div>
-        <div className="topic">
-          <a href="#">React</a>
-        </div>
-        <div className="topic">
-          <a href="#">React</a>
-        </div>
-        <div className="topic">
-          <a href="#">React</a>
-        </div>
-        <div className="topic">
-          <a href="#">React</a>
-        </div>
-        <div className="topic">
-          <a href="#">React</a>
-        </div>
-        <div className="topic">
-          <a href="#">React</a>
-        </div>
-        <div className="topic">
-          <a href="#">React</a>
-        </div>
-        <div className="topic">
-          <a href="#">React</a>
-        </div>
-        <div className="topic">
-          <a href="#">React</a>
-        </div>
-        <div className="topic">
-          <a href="#">React</a>
-        </div>
-        <div className="topic">
-          <a href="#">React</a>
-        </div>
-        <div className="topic">
-          <a href="#">React</a>
-        </div>
-        <div className="topic">
-          <a href="#">React</a>
-        </div>
-        <div className="topic">
-          <a href="#">React</a>
-        </div>
+        {
+          tags.map(e => (
+            <div className="topic">
+              <a href="#">{e}</a>
+            </div>
+          ))
+        }
       </div>
+      <div className="clear"></div>
       <div className="divider"></div>
       <div className="topPostsPosts">
         <div className="post">
@@ -578,6 +546,7 @@ export default (props:any) => {
         <div className="sec">
           using Nextjs, Mongodb and Node
         </div>
+      </div>
       </div>
     </div>
   );

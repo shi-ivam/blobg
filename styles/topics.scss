@@ -1,17 +1,26 @@
+.flex{
+    display: flex;
+    flex-direction: column;
+}
+
 .topics{
-    display: grid;
-    grid-template-columns: repeat(10,1fr);
-    column-gap: 10px;
-    row-gap: 10px;
     padding:20px 0 10px ;
+    height: max-content;
+    .topics::after {
+        content: "";
+        clear: both;
+        display: table;
+      }
     .topic {
+        float: left;
+        margin:0 10px 10px 0;
         text-decoration: none;
         color:rgb(70, 70, 70);
         display: flex;
         justify-content: center;
         background:rgba(240, 240, 240, 0.568);
         position: relative;
-        
+        overflow: auto;
         a{
             color:black;
             text-decoration: none;

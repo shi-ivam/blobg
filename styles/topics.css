@@ -1,15 +1,29 @@
+.flex {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
 .topics {
-  display: -ms-grid;
-  display: grid;
-  -ms-grid-columns: (1fr)[10];
-      grid-template-columns: repeat(10, 1fr);
-  -webkit-column-gap: 10px;
-          column-gap: 10px;
-  row-gap: 10px;
   padding: 20px 0 10px;
+  height: -webkit-max-content;
+  height: -moz-max-content;
+  height: max-content;
+}
+
+.topics .topics::after {
+  content: "";
+  clear: both;
+  display: table;
 }
 
 .topics .topic {
+  float: left;
+  margin: 0 10px 10px 0;
   text-decoration: none;
   color: #464646;
   display: -webkit-box;
@@ -20,6 +34,7 @@
           justify-content: center;
   background: rgba(240, 240, 240, 0.568);
   position: relative;
+  overflow: auto;
 }
 
 .topics .topic a {

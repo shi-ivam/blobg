@@ -1,6 +1,6 @@
-export default () => {
+export default (props) => {
     return (
-        <div className="post">
+        <div className="post" onClick={() => {window.location.href="/posts/" + props.slug}}>
             <div className="topbar">
                 <div className="content">
                     <div className="image">
@@ -17,37 +17,27 @@ export default () => {
             </div>
             <div className="postCon">
                 <div className="title">
-                    CSS Grid Cheat Sheet Illustrated in 2021🎖️
+                    {props.title}
                 </div>
                 <div className="tags">
-                    <div className="tag">
-                        <div className="hash">#</div>React
-                    </div>
-                    <div className="tag">
-                        <div className="hash">#</div>React
-                    </div>
-                    <div className="tag">
-                        <div className="hash">#</div>React
-                    </div>
-                    <div className="tag">
-                        <div className="hash">#</div>React
-                    </div>
-                    <div className="tag">
-                        <div className="hash">#</div>React
-                    </div>
-                    <div className="tag">
-                        <div className="hash">#</div>React
-                    </div>
+                    {
+                        props.tags.map(e => (
+
+                            <div className="tag">
+                                <div className="hash">#</div>e
+                            </div>
+                        ))
+                    }
                 </div>
             </div>
             <div className="props">
                 <div className="attri">
                     <div className="hearts">
-                        <p>800</p>
+                        <p>{props.hearts}</p>
                         <div className="heart">Hearts</div>
                     </div>
                     <div className="hearts">
-                        <p>224</p>
+                        <p>{props.comments}</p>
                         <div className="heart">Comments</div>
                     </div>
                 </div>

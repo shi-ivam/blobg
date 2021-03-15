@@ -36,6 +36,10 @@ const Post = new mongoose.Schema({
         type:Number,
         default:0,
     },
+    comments:{
+        type:Number,
+        default:0,
+    },
     dateCreated:{
         type:Date,
         default:new Date(),
