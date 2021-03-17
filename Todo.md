@@ -1,0 +1,2 @@
+- Fix "/" in Tags Bug
+- Dynamic Featured Posts

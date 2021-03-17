@@ -1,14 +1,14 @@
 import dbConnect from '../../utils/dbConnect.js';
 import jwt from 'jsonwebtoken';
 import user from '../../models/user.js';
-import {serialize} from 'cookie';
+import { serialize } from 'cookie';
 
 
 export default async (req, res) => {
     await dbConnect();
     const cookie = req.headers.cookie;
     console.log(cookie)
-    if (cookie){
+    if (cookie) {
         const jwtUser = jwt.verify(cookie.split('=')[1], process.env.JWTSECRET);
         const foundUser = await user.findOne({ id: jwtUser.userId });
         if (!foundUser) {
@@ -21,13 +21,13 @@ export default async (req, res) => {
                     path: '/',
                 }),
             ]);
-    
+
             res.writeHead(302, { Location: '/' });
             res.end();
         }
     }
-    else{
-        
-    res.redirect('/')
+    else {
+
+        res.redirect('/')
     }
 }
