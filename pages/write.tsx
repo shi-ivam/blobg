@@ -10,6 +10,12 @@ import ReactCrop from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
 import { v4 } from "uuid";
 
+declare global {
+    interface Window {
+        timeout: any;
+    }
+}
+
 export async function getServerSideProps(context) {
     // Default auth to false
     let auth = false;
@@ -48,11 +54,11 @@ export default (props) => {
     const bodyRef: React.RefObject<HTMLInputElement> = createRef();
     const uploadImage: React.RefObject<HTMLInputElement> = createRef();
 
-    const [suggestedTag, setSuggestedTag] = useState("React");
+    const [suggestedTag, setSuggestedTag] = useState("");
     const [tags, setTags] = useState([]);
     const [suggested, setSuggested] = useState("");
     const [modalIsOpen, setModalIsOpen] = useState(false);
-    const [crop, setCrop] = useState({ height: 0, width: 0 ,unit:'%'});
+    const [crop, setCrop] = useState({ height: 0, width: 0, unit: "%" });
     const [imageSrc, setImageSrc] = useState("");
     const [uploading, setUploading] = useState(false);
 
@@ -61,7 +67,6 @@ export default (props) => {
     const [images, setImages] = useState([]);
 
     const handleUpload = () => {
-
         // console.log(crop);
         // return
 
@@ -84,7 +89,7 @@ export default (props) => {
             })
             .then((response) => {
                 if (response.data.type === "created") {
-                    setUploading(true)
+                    setUploading(true);
                     setTimeout(() => {
                         window.location.href = "/posts/" + response.data.slug;
                     }, 4000);
@@ -99,11 +104,21 @@ export default (props) => {
         }
     };
     const handleTagInputChange = (e) => {
-        if (e.target.value === suggestedTag.slice(0, e.target.value.length)) {
-            setSuggested(suggestedTag);
-        }
-        if (e.target.value === "") {
-            setSuggested("");
+        setSuggested('');
+        if (e.target.value) {
+            clearTimeout(window.timeout);
+            const value = e.target.value;
+            window.timeout = setTimeout(() => {
+                axios
+                    .get("/api/tags/" + value.trim().toLowerCase())
+                    .then((res) => {
+                        if (res.data.type === "found") {
+                            setSuggested(res.data.tag);
+                        } else {
+                            tagsRef.current.value = "";
+                        }
+                    });
+            }, 500);
         }
     };
     const handleFileInputChange = () => {
@@ -168,9 +183,7 @@ export default (props) => {
             </Head>
             <Header auth={props.auth} />
             {uploading ? (
-                <div className="uploading">
-                    Uploading...
-                </div>
+                <div className="uploading">Uploading...</div>
             ) : (
                 <section className="write">
                     <div className="sectionTitle">Write</div>
@@ -282,7 +295,7 @@ export default (props) => {
 };
 
 function CropDemo(props: any) {
-    const [crop, setCrop] = useState({ aspect:3/1 });
+    const [crop, setCrop] = useState({ aspect: 3 / 1 });
     return (
         <ReactCrop
             src={props.src}
