@@ -21,14 +21,11 @@ export default async (req, res) => {
 
 
     const final = await post.find({ tags: { $in: [tag] } }).skip(page * ipp).limit(ipp);
-    console.log(totalPages)
 
     if (page === totalPages) {
-
         res.send({ posts: final, type: 'found', end: true, totalPages });
     }
     else {
-
         res.send({ posts: final, type: 'found', end: false, totalPages });
     }
 
