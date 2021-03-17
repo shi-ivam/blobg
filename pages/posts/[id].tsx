@@ -27,7 +27,7 @@ export async function getServerSideProps(context) {
         if (foundUser) {
             const id = context.params.id;
             const response = await axios.get( 
-                "http://localhost:3000/api/getpost/" + id
+                "/api/getpost/" + id
             );
             if (response.data.type === 'success'){
                 return {

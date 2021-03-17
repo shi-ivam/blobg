@@ -74,14 +74,50 @@ export default (props: any) => {
     const topPosts = JSON.parse(props.topPosts);
     const latestPosts = JSON.parse(props.topPosts);
     const tags = JSON.parse(props.tags);
-    const [page, setPage] = useState(0);
+    const [page, setPage] = useState(0); //Initial page is 0 to help the skip cursor in mongo query
+    const itemsPerPage = 8;
+    const [loadActive, setLoadActive] = useState(true);
     const [tag, setTag] = useState("");
     const [posts, setPosts] = useState([]);
     const handleTagChange = (e) => {
         const tag = e;
-        axios.get("/api/posts/" + tag).then((res) => {
-            setPosts(res.data.posts);
+        setTag(tag);
+        axios.get(`/api/posts/${tag}/${itemsPerPage}/${page}`).then((res) => {
+            if (res.data.type === "found") {
+                setPosts(res.data.posts);
+                if (res.data.end) {
+                    setLoadActive(false);
+                }
+            } else {
+                if (res.data.type === "failed") {
+                    setPosts([]);
+                    if (res.data.end) {
+                        setLoadActive(false);
+                    }
+                }
+            }
         });
+    };
+    const handleLoadMore = () => {
+        const currentPage = page;
+        setPage(page + 1);
+        axios
+            .get(`/api/posts/${tag}/${itemsPerPage}/${currentPage + 1}`)
+            .then((res) => {
+                if (res.data.type === "found") {
+                    setPosts(posts.concat([...res.data.posts]));
+                    if (res.data.end) {
+                        setLoadActive(false);
+                    }
+                } else {
+                    if (res.data.type === "failed") {
+                        setPosts([]);
+                        if (res.data.end) {
+                            setLoadActive(false);
+                        }
+                    }
+                }
+            });
     };
     return (
         <div className="container">
@@ -142,11 +178,15 @@ export default (props: any) => {
                               )),
                           ]}
                 </div>
-                <div className="loadMore">
-                    <button className="load">
-                        Load More
-                    </button>
-                </div>
+                {loadActive ? (
+                    <div className="loadMore">
+                        <button className="load" onClick={handleLoadMore}>
+                            Load More
+                        </button>
+                    </div>
+                ) : (
+                    false
+                )}
                 <div className="divider"></div>
                 <div className="footer">
                     <div className="main">made with {"<3"} by shivam kumar</div>
