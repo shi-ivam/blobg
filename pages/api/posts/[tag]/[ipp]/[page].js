@@ -3,7 +3,6 @@ export default async (req, res) => {
     const tag = req.query.tag;
     const page = Number.parseInt(req.query.page);
     const ipp = Number.parseInt(req.query.ipp);
-    console.log(tag);
     const posts = await post.find({ tags: { $in: [tag] } })
 
     // Total Pages Logic Start
