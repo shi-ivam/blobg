@@ -101,6 +101,7 @@ export default (props: any) => {
     const handleLoadMore = () => {
         const currentPage = page;
         setPage(page + 1);
+        console.log(currentPage + 1)
         axios
             .get(`/api/posts/${tag}/${itemsPerPage}/${currentPage + 1}`)
             .then((res) => {
