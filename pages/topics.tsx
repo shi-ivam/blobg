@@ -4,6 +4,10 @@ import user from "../models/user.js";
 import Header from "../components/Header.partial";
 import dbConnect from "../utils/dbConnect.js";
 import fs from "fs";
+import Postcard from "../components/Postcard.partial";
+import post from "../models/post.js";
+import { useState } from "react";
+import axios from "axios";
 
 export async function getServerSideProps(context) {
     // Default auth to false
@@ -11,11 +15,38 @@ export async function getServerSideProps(context) {
 
     const tags = fs.readFileSync("./topics.json").toString();
 
+    // Default auth to false
+    await dbConnect();
+
+    // Get new Posts and top Posts
+    var newdate = new Date();
+
+    newdate.setDate(newdate.getDate() - 30); // minus the date
+
+    const oneMonthAgo = new Date(newdate);
+
+    const latestPosts = JSON.stringify(
+        await post
+            .find({
+                dateCreated: {
+                    $gte: oneMonthAgo,
+                },
+            })
+            .sort({ dateCreated: -1 })
+            .limit(8)
+    );
+
+    const topPosts = JSON.stringify(
+        await post.find().sort({ hearts: -1 }).limit(8)
+    );
     // check token and verify valid user
     if (!context.req.headers.cookie) {
         return {
             props: {
                 auth,
+                tags,
+                latestPosts,
+                topPosts,
             },
         };
     } else {
@@ -29,18 +60,29 @@ export async function getServerSideProps(context) {
             console.log(foundUser);
             auth = true;
             return {
-                props: { auth, tags }, // Will be passed to the page component as props
+                props: { auth, tags, latestPosts, topPosts }, // Will be passed to the page component as props
             };
         } else {
             return {
-                props: { auth, tags }, // Will be passed to the page component as props
+                props: { auth, tags, latestPosts, topPosts }, // Will be passed to the page component as props
             };
         }
     }
 }
 
 export default (props: any) => {
+    const topPosts = JSON.parse(props.topPosts);
+    const latestPosts = JSON.parse(props.topPosts);
     const tags = JSON.parse(props.tags);
+    const [page, setPage] = useState(0);
+    const [tag, setTag] = useState("");
+    const [posts, setPosts] = useState([]);
+    const handleTagChange = (e) => {
+        const tag = e;
+        axios.get("/api/posts/" + tag).then((res) => {
+            setPosts(res.data.posts);
+        });
+    };
     return (
         <div className="container">
             <Head>
@@ -52,485 +94,58 @@ export default (props: any) => {
                 <div className="topics">
                     {tags.map((e) => (
                         <div className="topic">
-                            <a href="#">{e}</a>
+                            <a
+                                href="javascript: void(0);"
+                                onClick={() => {
+                                    handleTagChange(e);
+                                }}
+                            >
+                                {e}
+                            </a>
                         </div>
                     ))}
                 </div>
                 <div className="clear"></div>
                 <div className="divider"></div>
                 <div className="topPostsPosts">
-                    <div className="post">
-                        <div className="topbar">
-                            <div className="content">
-                                <div className="image">
-                                    <img
-                                        src="https://widgetwhats.com/app/uploads/2019/11/free-profile-photo-whatsapp-4.png"
-                                        alt=""
-                                    />
-                                </div>
-                                <div className="data">
-                                    <div className="name">Shivam Kumar</div>
-                                    <div className="date">4 Months Ago</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="postCon">
-                            <div className="title">
-                                CSS Grid Cheat Sheet Illustrated in 2021🎖️
-                            </div>
-                            <div className="tags">
-                                <div className="tag">
-                                    <div className="hash">#</div>React
-                                </div>
-                                <div className="tag">
-                                    <div className="hash">#</div>React
-                                </div>
-                                <div className="tag">
-                                    <div className="hash">#</div>React
-                                </div>
-                                <div className="tag">
-                                    <div className="hash">#</div>React
-                                </div>
-                                <div className="tag">
-                                    <div className="hash">#</div>React
-                                </div>
-                                <div className="tag">
-                                    <div className="hash">#</div>React
-                                </div>
-                            </div>
-                        </div>
-                        <div className="props">
-                            <div className="attri">
-                                <div className="hearts">
-                                    <p>800</p>
-                                    <div className="heart">Hearts</div>
-                                </div>
-                                <div className="hearts">
-                                    <p>224</p>
-                                    <div className="heart">Comments</div>
-                                </div>
-                            </div>
-                            <div className="actions">
-                                <div className="time">5 Min Read</div>
-                                <div className="btn">
-                                    <button>Save</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="post">
-                        <div className="topbar">
-                            <div className="content">
-                                <div className="image">
-                                    <img
-                                        src="https://widgetwhats.com/app/uploads/2019/11/free-profile-photo-whatsapp-4.png"
-                                        alt=""
-                                    />
-                                </div>
-                                <div className="data">
-                                    <div className="name">Shivam Kumar</div>
-                                    <div className="date">4 Months Ago</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="postCon">
-                            <div className="title">
-                                CSS Grid Cheat Sheet Illustrated in 2021🎖️
-                            </div>
-                            <div className="tags">
-                                <div className="tag">
-                                    <div className="hash">#</div>React
-                                </div>
-                                <div className="tag">
-                                    <div className="hash">#</div>React
-                                </div>
-                                <div className="tag">
-                                    <div className="hash">#</div>React
-                                </div>
-                                <div className="tag">
-                                    <div className="hash">#</div>React
-                                </div>
-                                <div className="tag">
-                                    <div className="hash">#</div>React
-                                </div>
-                                <div className="tag">
-                                    <div className="hash">#</div>React
-                                </div>
-                            </div>
-                        </div>
-                        <div className="props">
-                            <div className="attri">
-                                <div className="hearts">
-                                    <p>800</p>
-                                    <div className="heart">Hearts</div>
-                                </div>
-                                <div className="hearts">
-                                    <p>224</p>
-                                    <div className="heart">Comments</div>
-                                </div>
-                            </div>
-                            <div className="actions">
-                                <div className="time">5 Min Read</div>
-                                <div className="btn">
-                                    <button>Save</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="post">
-                        <div className="topbar">
-                            <div className="content">
-                                <div className="image">
-                                    <img
-                                        src="https://widgetwhats.com/app/uploads/2019/11/free-profile-photo-whatsapp-4.png"
-                                        alt=""
-                                    />
-                                </div>
-                                <div className="data">
-                                    <div className="name">Shivam Kumar</div>
-                                    <div className="date">4 Months Ago</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="postCon">
-                            <div className="title">
-                                CSS Grid Cheat Sheet Illustrated in 2021🎖️
-                            </div>
-                            <div className="tags">
-                                <div className="tag">
-                                    <div className="hash">#</div>React
-                                </div>
-                                <div className="tag">
-                                    <div className="hash">#</div>React
-                                </div>
-                                <div className="tag">
-                                    <div className="hash">#</div>React
-                                </div>
-                                <div className="tag">
-                                    <div className="hash">#</div>React
-                                </div>
-                                <div className="tag">
-                                    <div className="hash">#</div>React
-                                </div>
-                                <div className="tag">
-                                    <div className="hash">#</div>React
-                                </div>
-                            </div>
-                        </div>
-                        <div className="props">
-                            <div className="attri">
-                                <div className="hearts">
-                                    <p>800</p>
-                                    <div className="heart">Hearts</div>
-                                </div>
-                                <div className="hearts">
-                                    <p>224</p>
-                                    <div className="heart">Comments</div>
-                                </div>
-                            </div>
-                            <div className="actions">
-                                <div className="time">5 Min Read</div>
-                                <div className="btn">
-                                    <button>Save</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="post">
-                        <div className="topbar">
-                            <div className="content">
-                                <div className="image">
-                                    <img
-                                        src="https://widgetwhats.com/app/uploads/2019/11/free-profile-photo-whatsapp-4.png"
-                                        alt=""
-                                    />
-                                </div>
-                                <div className="data">
-                                    <div className="name">Shivam Kumar</div>
-                                    <div className="date">4 Months Ago</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="postCon">
-                            <div className="title">
-                                CSS Grid Cheat Sheet Illustrated in 2021🎖️
-                            </div>
-                            <div className="tags">
-                                <div className="tag">
-                                    <div className="hash">#</div>React
-                                </div>
-                                <div className="tag">
-                                    <div className="hash">#</div>React
-                                </div>
-                                <div className="tag">
-                                    <div className="hash">#</div>React
-                                </div>
-                                <div className="tag">
-                                    <div className="hash">#</div>React
-                                </div>
-                                <div className="tag">
-                                    <div className="hash">#</div>React
-                                </div>
-                                <div className="tag">
-                                    <div className="hash">#</div>React
-                                </div>
-                            </div>
-                        </div>
-                        <div className="props">
-                            <div className="attri">
-                                <div className="hearts">
-                                    <p>800</p>
-                                    <div className="heart">Hearts</div>
-                                </div>
-                                <div className="hearts">
-                                    <p>224</p>
-                                    <div className="heart">Comments</div>
-                                </div>
-                            </div>
-                            <div className="actions">
-                                <div className="time">5 Min Read</div>
-                                <div className="btn">
-                                    <button>Save</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="post">
-                        <div className="topbar">
-                            <div className="content">
-                                <div className="image">
-                                    <img
-                                        src="https://widgetwhats.com/app/uploads/2019/11/free-profile-photo-whatsapp-4.png"
-                                        alt=""
-                                    />
-                                </div>
-                                <div className="data">
-                                    <div className="name">Shivam Kumar</div>
-                                    <div className="date">4 Months Ago</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="postCon">
-                            <div className="title">
-                                CSS Grid Cheat Sheet Illustrated in 2021🎖️
-                            </div>
-                            <div className="tags">
-                                <div className="tag">
-                                    <div className="hash">#</div>React
-                                </div>
-                                <div className="tag">
-                                    <div className="hash">#</div>React
-                                </div>
-                                <div className="tag">
-                                    <div className="hash">#</div>React
-                                </div>
-                                <div className="tag">
-                                    <div className="hash">#</div>React
-                                </div>
-                                <div className="tag">
-                                    <div className="hash">#</div>React
-                                </div>
-                                <div className="tag">
-                                    <div className="hash">#</div>React
-                                </div>
-                            </div>
-                        </div>
-                        <div className="props">
-                            <div className="attri">
-                                <div className="hearts">
-                                    <p>800</p>
-                                    <div className="heart">Hearts</div>
-                                </div>
-                                <div className="hearts">
-                                    <p>224</p>
-                                    <div className="heart">Comments</div>
-                                </div>
-                            </div>
-                            <div className="actions">
-                                <div className="time">5 Min Read</div>
-                                <div className="btn">
-                                    <button>Save</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="post">
-                        <div className="topbar">
-                            <div className="content">
-                                <div className="image">
-                                    <img
-                                        src="https://widgetwhats.com/app/uploads/2019/11/free-profile-photo-whatsapp-4.png"
-                                        alt=""
-                                    />
-                                </div>
-                                <div className="data">
-                                    <div className="name">Shivam Kumar</div>
-                                    <div className="date">4 Months Ago</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="postCon">
-                            <div className="title">
-                                CSS Grid Cheat Sheet Illustrated in 2021🎖️
-                            </div>
-                            <div className="tags">
-                                <div className="tag">
-                                    <div className="hash">#</div>React
-                                </div>
-                                <div className="tag">
-                                    <div className="hash">#</div>React
-                                </div>
-                                <div className="tag">
-                                    <div className="hash">#</div>React
-                                </div>
-                                <div className="tag">
-                                    <div className="hash">#</div>React
-                                </div>
-                                <div className="tag">
-                                    <div className="hash">#</div>React
-                                </div>
-                                <div className="tag">
-                                    <div className="hash">#</div>React
-                                </div>
-                            </div>
-                        </div>
-                        <div className="props">
-                            <div className="attri">
-                                <div className="hearts">
-                                    <p>800</p>
-                                    <div className="heart">Hearts</div>
-                                </div>
-                                <div className="hearts">
-                                    <p>224</p>
-                                    <div className="heart">Comments</div>
-                                </div>
-                            </div>
-                            <div className="actions">
-                                <div className="time">5 Min Read</div>
-                                <div className="btn">
-                                    <button>Save</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="post">
-                        <div className="topbar">
-                            <div className="content">
-                                <div className="image">
-                                    <img
-                                        src="https://widgetwhats.com/app/uploads/2019/11/free-profile-photo-whatsapp-4.png"
-                                        alt=""
-                                    />
-                                </div>
-                                <div className="data">
-                                    <div className="name">Shivam Kumar</div>
-                                    <div className="date">4 Months Ago</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="postCon">
-                            <div className="title">
-                                CSS Grid Cheat Sheet Illustrated in 2021🎖️
-                            </div>
-                            <div className="tags">
-                                <div className="tag">
-                                    <div className="hash">#</div>React
-                                </div>
-                                <div className="tag">
-                                    <div className="hash">#</div>React
-                                </div>
-                                <div className="tag">
-                                    <div className="hash">#</div>React
-                                </div>
-                                <div className="tag">
-                                    <div className="hash">#</div>React
-                                </div>
-                                <div className="tag">
-                                    <div className="hash">#</div>React
-                                </div>
-                                <div className="tag">
-                                    <div className="hash">#</div>React
-                                </div>
-                            </div>
-                        </div>
-                        <div className="props">
-                            <div className="attri">
-                                <div className="hearts">
-                                    <p>800</p>
-                                    <div className="heart">Hearts</div>
-                                </div>
-                                <div className="hearts">
-                                    <p>224</p>
-                                    <div className="heart">Comments</div>
-                                </div>
-                            </div>
-                            <div className="actions">
-                                <div className="time">5 Min Read</div>
-                                <div className="btn">
-                                    <button>Save</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="post">
-                        <div className="topbar">
-                            <div className="content">
-                                <div className="image">
-                                    <img
-                                        src="https://widgetwhats.com/app/uploads/2019/11/free-profile-photo-whatsapp-4.png"
-                                        alt=""
-                                    />
-                                </div>
-                                <div className="data">
-                                    <div className="name">Shivam Kumar</div>
-                                    <div className="date">4 Months Ago</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="postCon">
-                            <div className="title">
-                                CSS Grid Cheat Sheet Illustrated in 2021🎖️
-                            </div>
-                            <div className="tags">
-                                <div className="tag">
-                                    <div className="hash">#</div>React
-                                </div>
-                                <div className="tag">
-                                    <div className="hash">#</div>React
-                                </div>
-                                <div className="tag">
-                                    <div className="hash">#</div>React
-                                </div>
-                                <div className="tag">
-                                    <div className="hash">#</div>React
-                                </div>
-                                <div className="tag">
-                                    <div className="hash">#</div>React
-                                </div>
-                                <div className="tag">
-                                    <div className="hash">#</div>React
-                                </div>
-                            </div>
-                        </div>
-                        <div className="props">
-                            <div className="attri">
-                                <div className="hearts">
-                                    <p>800</p>
-                                    <div className="heart">Hearts</div>
-                                </div>
-                                <div className="hearts">
-                                    <p>224</p>
-                                    <div className="heart">Comments</div>
-                                </div>
-                            </div>
-                            <div className="actions">
-                                <div className="time">5 Min Read</div>
-                                <div className="btn">
-                                    <button>Save</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    {posts.length
+                        ? posts.map((e) => (
+                              <Postcard
+                                  title={e.title}
+                                  slug={e.slug}
+                                  hearts={e.hearts}
+                                  tags={e.tags}
+                                  author={e.author}
+                                  comments={e.comments}
+                              />
+                          ))
+                        : [
+                              ...latestPosts.map((e) => (
+                                  <Postcard
+                                      title={e.title}
+                                      slug={e.slug}
+                                      hearts={e.hearts}
+                                      tags={e.tags}
+                                      author={e.author}
+                                      comments={e.comments}
+                                  />
+                              )),
+                              ...topPosts.map((e) => (
+                                  <Postcard
+                                      title={e.title}
+                                      slug={e.slug}
+                                      hearts={e.hearts}
+                                      tags={e.tags}
+                                      author={e.author}
+                                      comments={e.comments}
+                                  />
+                              )),
+                          ]}
+                </div>
+                <div className="loadMore">
+                    <button className="load">
+                        Load More
+                    </button>
                 </div>
                 <div className="divider"></div>
                 <div className="footer">

@@ -24,7 +24,7 @@ export default (props) => {
                         props.tags.map(e => (
 
                             <div className="tag">
-                                <div className="hash">#</div>e
+                                <div className="hash">#</div>{e}
                             </div>
                         ))
                     }

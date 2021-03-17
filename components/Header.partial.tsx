@@ -9,7 +9,7 @@ export default  (props) => {
                     <a href="/write">Write</a>
                 </li>
                 <li className={"navBarULListItem"}>
-                    <a href="/topics">Topic</a>
+                    <a href="/topics">Topics</a>
                 </li>
                 <li className={"navBarULListItem"}>
                     {
