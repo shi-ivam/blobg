@@ -4,6 +4,7 @@ import axios from "axios";
 import jwt from 'jsonwebtoken';
 import user from '../models/user.js';
 import Header from '../components/Header.partial';
+import dbConnect from '../utils/dbConnect.js'
 
 export async function getServerSideProps(context) {
     // Default auth to false

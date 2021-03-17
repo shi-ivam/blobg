@@ -14,7 +14,6 @@ export default (req,res) => {
             let {type,email,username,passwd,cpasswd} = req.body;
             
             if (type === 'login'){
-                console.log(email,passwd)
                 if (!email || !passwd){
                     res.send({type:"failed",reason:'emptyfields'})
                     return
@@ -24,7 +23,7 @@ export default (req,res) => {
                 user.findOne({email:email})
                 .then((foundUser) => {
                     if (!!foundUser){
-                        if (bcrypt.compareSync(passwd,foundUser.password) || passwd == foundUser.password){
+                        if (bcrypt.compareSync(passwd,foundUser.password)){
                             const data = {
                                 userId:foundUser.id,
                                 createdAt:Date.now(),
@@ -32,7 +31,7 @@ export default (req,res) => {
                             const token = jwt.sign(data,process.env.JWTSECRET);
                             res.setHeader('Set-Cookie',cookie.serialize('auth',token,{
                                 httpOnly:true,
-                                secure:!process.env.NODE_ENV,
+                                secure:!process.env.NODE_DEV,
                                 sameSite:'strict',
                                 maxAge:3600,
                                 path:'/'
@@ -82,9 +81,9 @@ export default (req,res) => {
                                 createdAt:Date.now(),
                             }
                             const token = jwt.sign(data,process.env.JWTSECRET);
-                            res.setHeader('Set-Cookie',cookie.serialize('auth',JSON.stringify(token),{
+                            res.setHeader('Set-Cookie',cookie.serialize('auth',token,{
                                 httpOnly:true,
-                                secure:!process.env.NODE_ENV,
+                                secure:!process.env.NODE_DEV,
                                 sameSite:'strict',
                                 maxAge:3600,
                                 path:'/'

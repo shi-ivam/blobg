@@ -1,0 +1,21 @@
+.logout {
+  height: 80vh;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.logout button {
+  padding: 12px 30px;
+  font-size: 1.1rem;
+  background: #e2e2e2;
+  border: 0;
+}
+/*# sourceMappingURL=out.css.map */

@@ -50,7 +50,7 @@ export async function getServerSideProps(context) {
             },
         };
     } else {
-        const db = await dbConnect();
+        await dbConnect();
         const jwtUser = jwt.verify(
             context.req.headers.cookie.split("=")[1],
             process.env.JWTSECRET
