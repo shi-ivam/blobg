@@ -62,8 +62,8 @@
             }
             .images {
                 display: block;
-                padding: 20px 10px 10px 20px;
-                background: #f1f1f1;
+                // padding: 20px 10px 10px 20px;
+                // background: #f1f1f1;
                 .wrap {
                     float: left;
                     margin-right: 10px;
@@ -90,14 +90,13 @@
                             font-weight: normal;
                             font-size: 1.05rem;
                             font-style: italic;
-
+                            margin-bottom: 10px;
                         }
                     }
                 }
             }
             .upload-images {
                 padding:10px;
-                margin-top: 10px;
                 background: #f1f1f1;
                 display: flex;
                 align-items: center;

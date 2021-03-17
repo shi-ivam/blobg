@@ -89,8 +89,6 @@
 
 .write .post .grp .images {
   display: block;
-  padding: 20px 10px 10px 20px;
-  background: #f1f1f1;
 }
 
 .write .post .grp .images .wrap {
@@ -134,11 +132,11 @@
   font-weight: normal;
   font-size: 1.05rem;
   font-style: italic;
+  margin-bottom: 10px;
 }
 
 .write .post .grp .upload-images {
   padding: 10px;
-  margin-top: 10px;
   background: #f1f1f1;
   display: -webkit-box;
   display: -ms-flexbox;

@@ -20,7 +20,7 @@ export default async (req, res) => {
     }
 
 
-    const final = await post.find({ tags: { $in: [tag] } }).skip(page * ipp).limit(ipp);
+    const final = await post.find({ tags: { $in: [tag] } }).sort({dateCreated:-1}).skip(page * ipp).limit(ipp);
 
     if (page === totalPages) {
         res.send({ posts: final, type: 'found', end: true, totalPages });
