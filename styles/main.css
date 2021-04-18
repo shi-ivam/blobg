@@ -264,6 +264,78 @@ div.footer .sec {
   font-size: 1rem;
 }
 
+div.overlay button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  max-width: 50px;
+  padding: 10px;
+}
+
+div.overlay button svg {
+  width: 100%;
+}
+
+div.overlay button svg path {
+  fill: black;
+}
+
+.info-card {
+  padding: 20px;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  -webkit-box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  background: white;
+}
+
+@-webkit-keyframes enable {
+  0% {
+    right: -100%;
+  }
+  100% {
+    right: 20px;
+  }
+}
+
+@keyframes enable {
+  0% {
+    right: -100%;
+  }
+  100% {
+    right: 20px;
+  }
+}
+
+@-webkit-keyframes disable {
+  0% {
+    right: 20px;
+  }
+  100% {
+    right: -100%;
+  }
+}
+
+@keyframes disable {
+  0% {
+    right: 20px;
+  }
+  100% {
+    right: -100%;
+  }
+}
+
+.card-enabled {
+  -webkit-animation: enable forwards 1s;
+          animation: enable forwards 1s;
+}
+
+.card-disabled {
+  -webkit-animation: disable forwards 2s;
+          animation: disable forwards 2s;
+}
+
 @media only screen and (max-width: 800px) {
   .newPostsPosts, .topPostsPosts {
     -ms-grid-columns: 1fr;

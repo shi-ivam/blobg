@@ -79,117 +79,91 @@ export default function Home(props) {
             </Head>
             <Header auth={props.auth} />
             <div className={styles.homeMain}>
-                <div className={styles.homeMainCh}>
-                    <div className={styles.homeMainChMainPostImage}>
-                        <img
-                            className={styles.fullWidthImage}
-                            src="/firstpost.jpg"
-                        ></img>
+                {topPosts.length ? (
+                    <div className={styles.homeMainCh}>
+                        <div className={styles.homeMainChMainPostImage}>
+                            <img
+                                className={styles.fullWidthImage}
+                                src={
+                                    topPosts[0].thumb === "none"
+                                        ? "/favicon.png"
+                                        : topPosts[0].thumb
+                                }
+                            ></img>
+                        </div>
+                        <div className={styles.mainChInfo}>
+                            <h3 className={styles.mainChInfoTitle}>
+                                {topPosts[0].title}
+                            </h3>
+                            <p className={styles.mainChInfoExtract}>
+                                Lorem ipsum dolor sit, amet consectetur
+                                adipisicing elit. Neque blanditiis, labore
+                                facilis eaque, cupiditate mollitia accusantium
+                                quas magnam omnis iure ut quaerat modi enim
+                                eligendi vero repudiandae qui alias asperiores?
+                                Eligendi vero, totam numquam quis rem porro
+                                sapiente nulla minima obcaecat
+                            </p>
+                        </div>
                     </div>
-                    <div className={styles.mainChInfo}>
-                        <h3 className={styles.mainChInfoTitle}>
-                            Top Places to Visit This Holiday Season
-                        </h3>
-                        <p className={styles.mainChInfoExtract}>
-                            As winter is around the corner, here's our top pick
-                            of places to visit in India this season. Auli,
-                            Uttarakhand. Facebook. Add. Nanital, Uttarakhand.
-                            Zoo. Add. Binsar, Uttarakhand. Facebook. Add.
-                            Manali, Himachal Pradesh. Facebook. Add. Shimla,
-                            Himachal Pradesh. Facebook
-                        </p>
+                ) : (
+                    <div className={styles.homeMainCh}>
+                        <div className={styles.homeMainChMainPostImage}>
+                            <img
+                                className={styles.fullWidthImage}
+                                src="/firstpost.jpg"
+                            ></img>
+                        </div>
+                        <div className={styles.mainChInfo}>
+                            <h3 className={styles.mainChInfoTitle}>
+                                Top Places to Visit This Holiday Season
+                            </h3>
+                            <p className={styles.mainChInfoExtract}>
+                                As winter is around the corner, here's our top
+                                pick of places to visit in India this season.
+                                Auli, Uttarakhand. Facebook. Add. Nanital,
+                                Uttarakhand. Zoo. Add. Binsar, Uttarakhand.
+                                Facebook. Add. Manali, Himachal Pradesh.
+                                Facebook. Add. Shimla, Himachal Pradesh.
+                                Facebook
+                            </p>
+                        </div>
                     </div>
-                </div>
+                )}
                 <div className={styles.homeMainCh}>
                     <div className={styles.innerSecCh}>
-                        <div className={styles.innerSecChStory}>
-                            <div className={styles.secImageWrapWrap}>
-                                <div
-                                    className={styles.innerSecChStoryImageWrap}
-                                >
-                                    <img
-                                        className={styles.secStoryImg}
-                                        src="/firstpost.jpg"
-                                    ></img>
+                        {topPosts.slice(1,5).map((e) => {
+                            return (
+                                <div className={styles.innerSecChStory}>
+                                    <div className={styles.secImageWrapWrap}>
+                                        <div
+                                            className={
+                                                styles.innerSecChStoryImageWrap
+                                            }
+                                        >
+                                            <img
+                                                className={styles.secStoryImg}
+                                                src={
+                                                    topPosts[0].thumb === "none"
+                                                        ? "/favicon.png"
+                                                        : topPosts[0].thumb
+                                                }
+                                            ></img>
+                                        </div>
+                                    </div>
+                                    <div className={styles.SecChStoryInfo}>
+                                        <h1 className={styles.secStoryTitle}>
+                                            {e.title}
+                                        </h1>
+                                        <p className={styles.secStoryExtract}>
+                                            As winter is around the corner,
+                                            here's our top pick of places to
+                                            visit in India this season.
+                                        </p>
+                                    </div>
                                 </div>
-                            </div>
-                            <div className={styles.SecChStoryInfo}>
-                                <h1 className={styles.secStoryTitle}>
-                                    Best Places to Visit
-                                </h1>
-                                <p className={styles.secStoryExtract}>
-                                    As winter is around the corner, here's our
-                                    top pick of places to visit in India this
-                                    season.
-                                </p>
-                            </div>
-                        </div>
-                        <div className={styles.innerSecChStory}>
-                            <div className={styles.secImageWrapWrap}>
-                                <div
-                                    className={styles.innerSecChStoryImageWrap}
-                                >
-                                    <img
-                                        className={styles.secStoryImg}
-                                        src="/firstpost.jpg"
-                                    ></img>
-                                </div>
-                            </div>
-                            <div className={styles.SecChStoryInfo}>
-                                <h1 className={styles.secStoryTitle}>
-                                    Best Places to Visit
-                                </h1>
-                                <p className={styles.secStoryExtract}>
-                                    As winter is around the corner, here's our
-                                    top pick of places to visit in India this
-                                    season.
-                                </p>
-                            </div>
-                        </div>
-                        <div className={styles.innerSecChStory}>
-                            <div className={styles.secImageWrapWrap}>
-                                <div
-                                    className={styles.innerSecChStoryImageWrap}
-                                >
-                                    <img
-                                        className={styles.secStoryImg}
-                                        src="/firstpost.jpg"
-                                    ></img>
-                                </div>
-                            </div>
-                            <div className={styles.SecChStoryInfo}>
-                                <h1 className={styles.secStoryTitle}>
-                                    Best Places to Visit
-                                </h1>
-                                <p className={styles.secStoryExtract}>
-                                    As winter is around the corner, here's our
-                                    top pick of places to visit in India this
-                                    season.
-                                </p>
-                            </div>
-                        </div>
-                        <div className={styles.innerSecChStory}>
-                            <div className={styles.secImageWrapWrap}>
-                                <div
-                                    className={styles.innerSecChStoryImageWrap}
-                                >
-                                    <img
-                                        className={styles.secStoryImg}
-                                        src="/firstpost.jpg"
-                                    ></img>
-                                </div>
-                            </div>
-                            <div className={styles.SecChStoryInfo}>
-                                <h1 className={styles.secStoryTitle}>
-                                    Best Places to Visit
-                                </h1>
-                                <p className={styles.secStoryExtract}>
-                                    As winter is around the corner, here's our
-                                    top pick of places to visit in India this
-                                    season.
-                                </p>
-                            </div>
-                        </div>
+                            );
+                        })}
                     </div>
                 </div>
             </div>

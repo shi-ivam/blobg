@@ -51,7 +51,8 @@ export default (req, res) => {
                                             expires: moment().add(3, 'days').format('MM-DD-YYYY')
                                         })
                                                                                 // link on first index
-                                        res.send({type:'success', html, title: foundPost.title ,thumb:thumb[0]});
+                                        console.log(foundPost.id)
+                                        res.send({type:'success', html,postId:foundPost.id, title: foundPost.title ,thumb:thumb[0]});
                                     })
                             });
                         })

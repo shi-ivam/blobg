@@ -7,7 +7,7 @@ async function dbConnect() {
     return
   }
 
-  if (process.env.NODE_DEV) {
+  if (process.env.NODE_DEV == 'true') {
     return mongoose.connect('mongodb://127.0.0.1:27017/deblofer', {
       useNewUrlParser: true,
       useUnifiedTopology: true,
@@ -16,7 +16,7 @@ async function dbConnect() {
     })
   }
   else {
-    return mongoose.connect('mongodb+srv://dbuser:'+ process.env.MONGO_PASS +'@coderkill.3vlzw.mongodb.net/deblofer?retryWrites=true&w=majority', {
+    return mongoose.connect('mongodb+srv://admin:' + process.env.MONGO_PASS + '@cluster0.0blqu.mongodb.net/deblofer', {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useFindAndModify: false,
