@@ -58,7 +58,7 @@ export default async (req, res) => {
                         width: Math.floor(parsedCrop.width),
                         height: Math.floor(parsedCrop.height),
                         left: Math.floor(parsedCrop.x),
-                        top: Math.floor(parsedCrop.y),
+                        top: Math.floor(parsedCrop.height)-Math.floor(parsedCrop.y),
                     })
                     .resize({ width: 800 })
                     .toFile('./images/' + id + '.jpg')
